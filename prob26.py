@@ -1,8 +1,12 @@
 from decimal import *
 
+n = 1000
+getcontext().prec = 2 * n
+
 #fix recur_len so that it checks for the case where repeating starts after the first char
 
 def recur_len(str):
+
     first = str[0]
     first_next_idx = str[1:].index(first) + 1
     pattern1 = str[:first_next_idx]
