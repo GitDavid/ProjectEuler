@@ -11,7 +11,10 @@ def recur_len(str):
     if len(str) <= 10: #to rule out terminating decimals
         return 0
     first = str[0]
-    first_next_idx = str[1:].index(first) + 1
+    idx = 1
+    while first == str[idx]:
+        idx += 1 # for skipping initial repeating 0's
+    first_next_idx = str[idx:].index(first)
     pattern1 = str[:first_next_idx]
     pattern2 = str[first_next_idx: first_next_idx + len(pattern1)]
     # print first, first_next_idx, pattern1, pattern2
@@ -21,6 +24,7 @@ def recur_len(str):
                 return len(pattern1)
             else:
                 first_next_idx += str[first_next_idx + 1:].index(first) + 1
+                pattern1 = str[:first_next_idx]
                 pattern2 = str[first_next_idx: first_next_idx + len(pattern1)]
                 # print first, first_next_idx, pattern1, pattern2
         except ValueError:
