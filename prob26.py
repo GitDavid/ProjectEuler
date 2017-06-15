@@ -4,17 +4,16 @@ from euler import *
 n = 1000
 getcontext().prec = 2 * n #set decimal precision to this b/c n-1 is longest possible repeat
 
-#need to fix recur_len so that it checks for the case where repeating starts after the first char
-#need to make recur_len not lazy, so it searches beyond first match
-
 def recur_len(str):
-    if len(str) <= 10: #to rule out terminating decimals
+    if len(str) < n: #to rule out terminating decimals
         return 0
     first = str[0]
-    idx = 1
-    while first == str[idx]:
+    idx = 0
+    while str[idx] == '0':
         idx += 1 # for skipping initial repeating 0's
-    first_next_idx = str[idx:].index(first)
+        # print idx
+    first_next_idx = str[idx:].index(first) + idx
+    # print first_next_idx
     pattern1 = str[:first_next_idx]
     pattern2 = str[first_next_idx: first_next_idx + len(pattern1)]
     # print first, first_next_idx, pattern1, pattern2
@@ -40,8 +39,9 @@ primes = [x for x in range(n) if is_prime(x)]
 for i in primes:
     # print i
     reciprocal = str(Decimal(1) / Decimal(i))
-    print i, recur_len(reciprocal[2:])
+    # print i, recur_len(reciprocal[2:])
     if recur_len(reciprocal[2:]) > longest_dec:
+        longest_dec = recur_len(reciprocal[2:])
         longest_i = i
 
 print longest_i
